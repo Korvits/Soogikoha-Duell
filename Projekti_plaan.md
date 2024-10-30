@@ -11,6 +11,6 @@ Alfa:
 8. Kirjutada vastused uute faili
 
 Funktsioonid:
-1. Lugeda failist listi
+1. Lugeda failist (soogikohad.txt) listi
 2. Vastuse listide võrdlemine ja uute listi kirjutamine
-3. Panna vastused faili
+3. Panna tulemused faili (tulemused.txt)
