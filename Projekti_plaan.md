@@ -8,3 +8,9 @@ Alfa:
 5. Repeat teisele inimesele
 6. Võrrelda vastuste liste, kirjutada valitud söögikohad listi
 7. Kuvada vastused ekraanile
+8. Kirjutada vastused uute faili
+
+Funktsioonid:
+1. Lugeda failist (soogikohad.txt) listi
+2. Vastuse listide võrdlemine ja uute listi kirjutamine
+3. Panna tulemused faili (tulemused.txt)
