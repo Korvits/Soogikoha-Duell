@@ -6,9 +6,3 @@ def listide_võrdlemine(inimene1, inimene2):
         else:
             tulemus.append(0)
     return tulemus        
-
-print(listide_võrdlemine([1, 0, 1, 1, 0]
-,[1, 0, 0, 1, 0]))
-
-[1, 0, 1, 1, 0]
-[1, 0, 0, 1, 0]

@@ -7,5 +7,3 @@ def failist_listi(andmefail):
         soogikohad.append(rida.strip())
     fail.close()
     return soogikohad
-
-print(failist_listi("soogikohad.txt"))
