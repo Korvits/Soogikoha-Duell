@@ -4,6 +4,8 @@
 # Projekt
 # Teema: Söögikoha-Duell
 #
+# Programm Söögikoha Duell on mõeldud rasketeks olukordadeks, kui koos sõbraga ei
+# suudeta välja mõelda, millisesse Tartu söögikoha sööma minna.
 #
 # Autorid: Marek Kalda, Elisee Kask
 #
@@ -11,7 +13,7 @@
 # mõningane eeskuju:
 #
 # Lisakommentaar (nt käivitusjuhend):
-#
+# Töötab hetkel ainult shellis
 ##################################################
 
 def soogikohad_failist(failinimi):  #Loeb soogikohad failist järjendisse
