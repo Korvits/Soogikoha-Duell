@@ -10,7 +10,6 @@ Alfa:
 7. Kuvada vastused ekraanile
 8. Kirjutada vastused uute faili
 
-Funktsioonid:
-1. Lugeda failist (soogikohad.txt) listi
-2. Vastuse listide võrdlemine ja uute listi kirjutamine
-3. Panna tulemused faili (tulemused.txt)
+Beta:
+1. Luua tkinteri ja ttkbootstrapiga graafiline kasutajaliides.
+2. Luua uusi funktsioone, mis annaksid programmile juurde nii visuaalselt poolt kui ka funktsionaalsust (tbd).
