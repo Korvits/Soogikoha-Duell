@@ -1,8 +1,9 @@
-import tkinter as tk 
+import tkinter as tk
+import ttkbootstrap as tb
 
 def söögikohad_failist(failinimi): #alg koodist lihtsalt
     söögikohad = []
-    with open(failinimi, 'r', encoding="utf-8") as fail:
+    with open(failinimi, 'r', encoding="UTF-8") as fail:
         for rida in fail:
             söögikohad.append(rida.strip())
     return söögikohad
@@ -56,9 +57,9 @@ def alusta2_start():  # Teisele kasutajale lisame eraldi nupu ja teksti
     ei_nupp.pack_forget()
     nupp.pack_forget()
 
-    kasutaja2_label = tk.Label(window, text="Kasutaja 2, nüüd on sinu kord vastata!", background="#ADD8E6")
+    kasutaja2_label = tb.Label(window, text="Kasutaja 2, nüüd on sinu kord vastata!", bootstyle="primary")
     kasutaja2_label.pack(pady=20)
-    nupp2 = tk.Button(window, text="Alustame", command=kasutaja2_alustab, background="white", foreground="black")
+    nupp2 = tb.Button(window, text="Alustame", command=kasutaja2_alustab, bootstyle="white")
     nupp2.pack(pady=20)
 
 def kasutaja2_alustab(): #phm selleks, et kui ta vajutanud nupuleja küsimused ss remome nupu jne
@@ -78,24 +79,25 @@ def main():
     kasutaja_indeks = 0
     söögikoht_indeks = 0
 
-    window = tk.Tk()
+    window = tb.Window(themename='superhero')
     window.title("Söögikoha duell")
-    window.config(background="#ADD8E6") #helesinine värv, saab muuta
+    window.geometry("500x500")
 
-    tervitus_label = tk.Label(window, text="Kas tunnete tihti, et ei suuda jõuda kokkuleppele, kuhu Tartus sööma minna?\nLas ma aitan Teid!", background="#ADD8E6", wraplength=400)
+    tervitus_label = tb.Label(window, text="Kas tunnete tihti, et ei suuda jõuda kokkuleppele, kuhu Tartus sööma minna?\nLas ma aitan Teid!", bootstyle="white", wraplength=400)
     #see wraplength eelmisel real määrab phm, et kui pikalt tekst jookseb enne teisele reale minemist, praegu peaks olema täpselt akna ulatuses
     tervitus_label.pack(pady=20)
 
-    nupp = tk.Button(window, text="Kas alustame?", command=alusta, background="white", foreground="black")
+    nupp = tb.Button(window, text="Kas alustame?", command=alusta, bootstyle="primary, outline")
     nupp.pack(pady=20)
 
-    küsimus_label = tk.Label(window, text="", background="#ADD8E6", wraplength=400)
-    jah_nupp = tk.Button(window, text="Jah", command=lambda: salvesta_vastus("jah"), background="white", foreground="black")
-    ei_nupp = tk.Button(window, text="Ei", command=lambda: salvesta_vastus("ei"), background="white", foreground="black")
+    küsimus_label = tb.Label(window, text="", bootstyle="white", wraplength=400)
+    jah_nupp = tb.Button(window, text="Jah", bootstyle="success", command=lambda: salvesta_vastus("jah"))
+    ei_nupp = tb.Button(window, text="Ei", bootstyle="danger", command=lambda: salvesta_vastus("ei"))
 #see lambda paneb phm nupu tööle, kui annad talle mingi ülesande
-    tulemus_label = tk.Label(window, text="", wraplength=400, background="#ADD8E6")
+    tulemus_label = tb.Label(window, text="", bootstyle="primary", wraplength=400, )
 
     window.mainloop()
 
 if __name__ == "__main__":
     main()
+
