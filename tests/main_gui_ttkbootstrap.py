@@ -97,18 +97,40 @@ def main():
 
     window = tb.Window(themename='superhero')
     window.title("Söögikoha duell")
+    window.iconbitmap("images\Logo.jpg")
     
-    my_img1= ImageTk.PhotoImage(Image.open("images/placeholder.png"))
-    my_img2= ImageTk.PhotoImage(Image.open("images/Vapiano.png"))
-    my_img3= ImageTk.PhotoImage(Image.open("images/el_chapo.png"))
-    my_img4= ImageTk.PhotoImage(Image.open("images/kebaba.png"))
-    my_img5= ImageTk.PhotoImage(Image.open("images/kampus.png"))
-    my_img6= ImageTk.PhotoImage(Image.open("images/la_dolce_vita.png"))
-    my_img7= ImageTk.PhotoImage(Image.open("images/krempel.png"))
-    my_img8= ImageTk.PhotoImage(Image.open("images/mcdonalds.png"))
-    my_img9= ImageTk.PhotoImage(Image.open("images/burger_king.png"))
-    my_img10= ImageTk.PhotoImage(Image.open("images/kolm_tilli.png"))
-    my_img11= ImageTk.PhotoImage(Image.open("images/Pazzo.png"))
+    my_img1 = Image.open("images/Logo.jpg").resize((640, 640))
+    my_img1 = ImageTk.PhotoImage(my_img1)
+
+    my_img2 = Image.open("images/Vapiano.png").resize((640, 640))
+    my_img2 = ImageTk.PhotoImage(my_img2)
+
+    my_img3 = Image.open("images/el_chapo.png").resize((640, 640))
+    my_img3 = ImageTk.PhotoImage(my_img3)
+
+    my_img4 = Image.open("images/kebaba.png").resize((640, 640))
+    my_img4 = ImageTk.PhotoImage(my_img4)
+
+    my_img5 = Image.open("images/kampus.png").resize((640, 640))
+    my_img5 = ImageTk.PhotoImage(my_img5)
+
+    my_img6 = Image.open("images/la_dolce_vita.png").resize((640, 640))
+    my_img6 = ImageTk.PhotoImage(my_img6)
+
+    my_img7 = Image.open("images/krempel.png").resize((640, 640))
+    my_img7 = ImageTk.PhotoImage(my_img7)
+
+    my_img8 = Image.open("images/mcdonalds.png").resize((640, 640))
+    my_img8 = ImageTk.PhotoImage(my_img8)
+
+    my_img9 = Image.open("images/burger_king.png").resize((640, 640))
+    my_img9 = ImageTk.PhotoImage(my_img9)
+
+    my_img10 = Image.open("images/kolm_tilli.png").resize((640, 640))
+    my_img10 = ImageTk.PhotoImage(my_img10)
+
+    my_img11 = Image.open("images/Pazzo.png").resize((640, 640))
+    my_img11 = ImageTk.PhotoImage(my_img11)
     
     img_list = [my_img1, my_img2, my_img3, my_img4, my_img5, my_img6, my_img7, my_img8, my_img9, my_img10, my_img11]
         
