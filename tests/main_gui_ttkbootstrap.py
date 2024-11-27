@@ -19,9 +19,12 @@ def esita_küsimus():
     global söögikoht_indeks, kasutaja_indeks, jah_nupp, ei_nupp, img_label, img_list
     if söögikoht_indeks < len(söögikohad):
         küsimus_label.config(text=f"Kasutaja {kasutaja_indeks + 1}, kas sulle meeldib söögikoht '{söögikohad[söögikoht_indeks]}'?")
-        küsimus_label.grid(row=1, column=1, columnspan=3)
-        jah_nupp.grid(row=2, column=3, columnspan=1)
-        ei_nupp.grid(row=2, column=0, columnspan=1)
+        küsimus_label.grid(row=1, column=1, columnspan=1, padx=15, pady=15)
+        jah_nupp.grid(row=2, column=2, columnspan=1, padx=15, pady=15)
+        ei_nupp.grid(row=2, column=0, columnspan=1, padx=15, pady=15)
+        
+        window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(3)]) # Saab noolteks jah või ei panna
+        window.bind("<Left>", lambda x:[salvesta_vastus("ei"), pilt_edasi(3)])
     else:
         if kasutaja_indeks == 0:
             kasutaja_indeks = 1
@@ -44,15 +47,18 @@ def alusta2_start():  # Teisele kasutajale lisame eraldi nupu ja teksti
     global nupp2, kasutaja2_label
     
     küsimus_label.grid_forget() #eemaldab jah ja ei nupud mis enne ekraanil olid
-    jah_nupp.grid_forget() #pack ongi see, et ta phm paigutab end täpselt sellesse hüpikaknasse ja ei muutu, kui vahetan akna suurust, see bad tho, vaja muuta
+    jah_nupp.grid_forget() 
     ei_nupp.grid_forget()
     nupp.grid_forget()
 
     kasutaja2_label = tb.Label(window, text="Kasutaja 2, nüüd on sinu kord vastata!", bootstyle="white")
-    kasutaja2_label.grid(row=1, column=1, columnspan=3)
+    kasutaja2_label.grid(row=1, column=1, columnspan=1, padx=15, pady=15)
     
     nupp2 = tb.Button(window, text="Alustame", command =lambda: [kasutaja2_alustab(), pilt_edasi(2)], bootstyle="primary, outline")
-    nupp2.grid(row=2, column=1, columnspan=3)
+    nupp2.grid(row=2, column=1, columnspan=1, padx=15, pady=15)
+    
+    window.unbind("<Right>")
+    window.unbind("<Left>")
 
 def kasutaja2_alustab(): #phm selleks, et kui ta vajutanud nupuleja küsimused ss remome nupu jne
     global nupp2, kasutaja2_label
@@ -71,16 +77,17 @@ def ühised_söögikohad():
     jah_nupp.grid_forget() #remob nupud ja küsimused ära, et lõpp oleks clean
     ei_nupp.grid_forget()
     img_label.grid_forget()
-    tulemus_label.grid(row=2, column=1, columnspan=3) 
+    tulemus_label.grid(row=2, column=1, columnspan=1, padx=15, pady=15) 
 
 def pilt_edasi(pildi_nr):
     global img_label, jah_nupp, ei_nupp, img_list
-    if pildi_nr > len(img_list):
+    if pildi_nr > len(img_list): # Kontrollib kas listis on veel pilte
         return
     img_label.config(image=img_list[pildi_nr - 1])
-    jah_nupp.config(command=lambda: [salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)])
+    
+    jah_nupp.config(command=lambda: [salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Muudab nuppude funktsioone peale igat vajutust
     ei_nupp.config(command=lambda: [salvesta_vastus("ei"), pilt_edasi(pildi_nr + 1)])
-    window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)])
+    window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Sama asi, aga noole nuppudele
     window.bind("<Left>", lambda x:[salvesta_vastus("ei"), pilt_edasi(pildi_nr + 1)])
     
 def main():
@@ -90,6 +97,8 @@ def main():
     
     failinimi = "soogikohad.txt"
     söögikohad = söögikohad_failist(failinimi)
+    
+    
 
     kasutaja_vastused = [[], []]
     kasutaja_indeks = 0
@@ -97,7 +106,7 @@ def main():
 
     window = tb.Window(themename='superhero')
     window.title("Söögikoha duell")
-    window.iconbitmap("images\Logo.jpg")
+    window.iconbitmap("images\logo.ico")
     
     my_img1 = Image.open("images/Logo.jpg").resize((640, 640))
     my_img1 = ImageTk.PhotoImage(my_img1)
@@ -108,13 +117,13 @@ def main():
     my_img3 = Image.open("images/el_chapo.png").resize((640, 640))
     my_img3 = ImageTk.PhotoImage(my_img3)
 
-    my_img4 = Image.open("images/kebaba.png").resize((640, 640))
+    my_img4 = Image.open("images/kebaba.png").resize((289, 512))
     my_img4 = ImageTk.PhotoImage(my_img4)
 
-    my_img5 = Image.open("images/kampus.png").resize((640, 640))
+    my_img5 = Image.open("images/kampus.png").resize((600, 400))
     my_img5 = ImageTk.PhotoImage(my_img5)
 
-    my_img6 = Image.open("images/la_dolce_vita.png").resize((640, 640))
+    my_img6 = Image.open("images/la_dolce_vita.png").resize((594, 281))
     my_img6 = ImageTk.PhotoImage(my_img6)
 
     my_img7 = Image.open("images/krempel.png").resize((640, 640))
@@ -123,38 +132,33 @@ def main():
     my_img8 = Image.open("images/mcdonalds.png").resize((640, 640))
     my_img8 = ImageTk.PhotoImage(my_img8)
 
-    my_img9 = Image.open("images/burger_king.png").resize((640, 640))
+    my_img9 = Image.open("images/burger_king.png").resize((600, 330))
     my_img9 = ImageTk.PhotoImage(my_img9)
 
-    my_img10 = Image.open("images/kolm_tilli.png").resize((640, 640))
+    my_img10 = Image.open("images/kolm_tilli.png").resize((550, 366))
     my_img10 = ImageTk.PhotoImage(my_img10)
 
-    my_img11 = Image.open("images/Pazzo.png").resize((640, 640))
+    my_img11 = Image.open("images/Pazzo.png").resize((554, 308))
     my_img11 = ImageTk.PhotoImage(my_img11)
     
     img_list = [my_img1, my_img2, my_img3, my_img4, my_img5, my_img6, my_img7, my_img8, my_img9, my_img10, my_img11]
         
     
     img_label = tb.Label(image=my_img1)
-    img_label.grid(row=0, column=1, columnspan=3)
+    img_label.grid(row=0, column=0, columnspan=3) #Kuvab pildi
 
     
     tervitus_label = tb.Label(window, text="Kas tunnete tihti, et ei suuda jõuda kokkuleppele, kuhu Tartus sööma minna?\nLas ma aitan Teid!", bootstyle="white")
-    #see wraplength eelmisel real määrab phm, et kui pikalt tekst jookseb enne teisele reale minemist, praegu peaks olema täpselt akna ulatuses
-    tervitus_label.grid(row=1, column=1, columnspan=3)
+    tervitus_label.grid(row=1, column=1, columnspan=1, padx=15, pady=15) # Kuvab algse küsimuse
 
     nupp = tb.Button(window, text="Kas alustame?", command=lambda: [alusta(), pilt_edasi(2)], bootstyle="primary, outline")
-    nupp.grid(row=2, column=1, columnspan=3)
+    nupp.grid(row=2, column=1, columnspan=1, padx=15, pady=15)
 
     küsimus_label = tb.Label(window, text="", bootstyle="white", wraplength=400)
     tulemus_label = tb.Label(window, text="", bootstyle="white", wraplength=400)
     jah_nupp = tb.Button(window, text="Jah", bootstyle="success", command=lambda:[salvesta_vastus("jah"), pilt_edasi(3)])
     ei_nupp = tb.Button(window, text="Ei", bootstyle="danger", command=lambda:[salvesta_vastus("ei"), pilt_edasi(3)])
-    #see lambda paneb phm nupu tööle, kui annad talle mingi ülesande
     
-    window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(3)]) # Saab noolteks jah või ei panna
-    window.bind("<Left>", lambda x:[salvesta_vastus("ei"), pilt_edasi(3)])
-
 
     window.mainloop()
 
