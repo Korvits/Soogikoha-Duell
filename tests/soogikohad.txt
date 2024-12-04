@@ -1,10 +1,10 @@
-Vapiano 
-El Chapo
-Kebaba
-Kampus
-La Dolce vita
-Krempel
-McDonalds
-Burger King
-Kolm Tilli
-Pazzo
+Vapiano - Itaalia köök
+El Chapo - Mehhikopärane tänavatoit
+Kebaba - Türgi köök
+Kampus - Peakoka nurk, Uulitsa Tänavagurmee, Kauss Poke
+La Dolce vita - Itaalia köök
+Krempel - Kohvik
+McDonalds - Kiirtoidurestoran
+Burger King - Kiirtoidurestoran
+Kolm Tilli - Tänavatoidurestoran
+Pazzo - Itaalia köök
