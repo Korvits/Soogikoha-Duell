@@ -1,7 +1,7 @@
 Kuidas programmi kasutada:
         
 1. Otsustage kumb alustab
-2. Esimesene alustaja vajutab 'Alustame' nupule
+2. Esimesena alustaja vajutab 'Alustame' nupule
 3. Kui söögikoht sobib/ei sobi, siis vajuta vastavalt nuppudele 'jah' või 'ei'
 4. Kui ilmub ekraanile tekst 'Kasututaja 2, nüüd on sinu kord vastata', siis vajutab järgmine vastaja nupule 'Alustame'
 5. Kui olete mõlemad ära vastanud, siis ilmuvad ekraanile Teie ühised söögikoha eelistused
