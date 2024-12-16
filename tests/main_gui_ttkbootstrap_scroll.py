@@ -19,6 +19,27 @@ def söögid_failist(failinimi):
             söögid[söögikoht] = ühe_koha_söögid
     return söögid
 
+def kuidas_kasutada():
+    lisa_aken = tk.Toplevel(window)
+    lisa_aken.title("Kuidas kasutada?")
+    lisa_aken.geometry("") #sobitab ise akna suuruse, et kogu ekraanil olev mahuks peale
+    lisa_aken.minsize(400,400)
+    
+    juhend = ""
+    try:
+        with open("juhend.txt", "r", encoding="utf-8") as fail:
+            read = fail.readlines()
+            juhend = "\n\n".join(rida.strip() for rida in read if rida.strip())
+    except FileNotFoundError:
+        pass
+        
+    if juhend:
+        juhend_label = tb.Label(lisa_aken, text=juhend, bootstyle="white", wraplength=380)
+        juhend_label.pack(pady=20, padx=20)
+        
+    juhend_kinni = tb.Button(lisa_aken, text="Sulge juhend", command=lisa_aken.destroy, bootstyle="primary")
+    juhend_kinni.pack(pady=10)
+
 def alusta():
     global tervitus_label, nupp #see global phm selleks et ma saaks muuta siin funktsioonis mingit eelnevat funktsiooni v muutujat vms
     tervitus_label.grid_forget()  # Eemaldame tervituslabeli
@@ -84,23 +105,51 @@ def kasutaja2_alustab(): #
     nupp2.grid_forget()
     esita_küsimus()  # Alustab küsimustega teise kasutaja jaoks
 
+
 def ühised_söögikohad(): 
     window.unbind("<Right>")
     window.unbind("<Left>")
     
     ühised = [söögikohad[i] for i in range(len(söögikohad)) if kasutaja_vastused[0][i] == 1 and kasutaja_vastused[1][i] == 1]
     content_frame.destroy()  # Kustutab kõik eelneva ekraanilt
+    
+    # Loob uue raami, kuhu asjad sisse panna
     new_frame = tb.Frame(window)
     new_frame.pack(expand=True, fill="both")
     
+    # Loob canvase, kus saab kasutada scrollwheeli ja muid asju veel
+    canvas = tk.Canvas(new_frame)
+    
+    #Loob scrollbari
+    scrollbar = tb.Scrollbar(new_frame, orient="vertical", command=canvas.yview)
+    scrollable_frame = tb.Frame(canvas)
+    
+    # Teeb nii, et terve programmi raames saaks scrollida
+    scrollable_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+    )
+    #Loob akna kuhu saame oma pildid ja teksti panna
+    canvas.create_window((275, 0), window=scrollable_frame, anchor="nw")
+    #Määrab scrollbari canvasele ja määrab scorllimise suuna vertikaalseks
+    canvas.configure(yscrollcommand=scrollbar.set)
+    
+    #Laseb scrollida hiire mousewheeliga
+    canvas.bind("<MouseWheel>", lambda event: canvas.yview_scroll(-int(event.delta / 60), "units"))
+    
+    # Ilmutab molemad ekraanile
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
+    
+    # Lisame ühised söögikohad ekraanile
     if ühised:
-        tb.Label(new_frame, text="Söögikohad, mis meeldisid mõlemale", font=("Arial", 20, "bold")).pack(pady=20)
+        tb.Label(scrollable_frame, text="Söögikohad, mis meeldisid mõlemale", font=("Arial", 20, "bold")).pack(pady=20)
         for koht in ühised:
-            tb.Label(new_frame, text=koht, font=("Arial", 14)).pack(pady=5)
-            img_label = tb.Label(new_frame, image=img_list[söögikohad.index(koht)+1]).pack() 
+            tb.Label(scrollable_frame, text=koht, font=("Arial", 14)).pack(pady=75)
+            tb.Label(scrollable_frame, image=img_list[söögikohad.index(koht)+1]).pack(pady=10) 
     else:
-        tb.Label(new_frame, text="Ei leidunud söögikohti, mis meeldiksid mõlemale!", font=("Arial", 16), bootstyle="red").pack(pady=20)
-
+        tb.Label(scrollable_frame, text="Ei leidunud söögikohti, mis meeldiksid mõlemale!", font=("Arial", 16), bootstyle="red").pack(pady=20)
+        
 def pilt_edasi(pildi_nr):
     if pildi_nr > len(img_list): # Kontrollib kas listis on veel pilte
         return
@@ -217,9 +266,13 @@ def main():
     jah_nupp = tb.Button(content_frame, text="Jah", bootstyle="success", width=15, command=lambda:[salvesta_vastus("jah"), pilt_edasi(3)])
     ei_nupp = tb.Button(content_frame, text="Ei", bootstyle="danger", width=15, command=lambda:[salvesta_vastus("ei"), pilt_edasi(3)])
     
-
+    # Loob juhendi nupu
+    juhend_nupp = tb.Button(content_frame, text="Kuidas kasutada?", command=kuidas_kasutada, bootstyle="info, outline")
+    juhend_nupp.grid(row=3, column=1, columnspan=1, pady=15)
+    
     window.mainloop()
 
 if __name__ == "__main__":
     main()
+
 
