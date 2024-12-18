@@ -7,19 +7,19 @@
 # Programm Söögikoha Duell on mõeldud rasketeks olukordadeks, kui koos sõbraga ei
 # suudeta välja mõelda, millisesse Tartu söögikoha sööma minna.
 # 
-#
 # Autorid: Marek Kalda, Elisee Kask
 #
-# 
-# mõningane eeskuju:
+# Mõningane eeskuju:
 #
 # Lisakommentaar (nt käivitusjuhend):
 #  Hetkel kasutame Pythoni IDE, et programmi käivitada
 ##################################################
 
+
 import tkinter as tk
 import ttkbootstrap as tb
 from PIL import Image, ImageTk
+
 
 def söögikohad_failist(failinimi): # Loeb soogikohtade nimetused failist
     söögikohad = []
@@ -27,6 +27,7 @@ def söögikohad_failist(failinimi): # Loeb soogikohtade nimetused failist
         for rida in fail:
             söögikohad.append(rida.strip())
     return söögikohad
+
 
 def söögid_failist(failinimi): # Loeb söögikohtade söökide valikud failist 
     söögid = {}
@@ -37,6 +38,7 @@ def söögid_failist(failinimi): # Loeb söögikohtade söökide valikud failist
             ühe_koha_söögid = osad[1:]
             söögid[söögikoht] = ühe_koha_söögid
     return söögid
+
 
 def kuidas_kasutada(): # Loob õpetuse hüpikakna programmile
     lisa_aken = tk.Toplevel(window)
@@ -59,11 +61,13 @@ def kuidas_kasutada(): # Loob õpetuse hüpikakna programmile
     juhend_kinni = tb.Button(lisa_aken, text="Sulge juhend", command=lisa_aken.destroy, bootstyle="primary")
     juhend_kinni.pack(pady=10)
 
+
 def alusta(): # Alustab programmi tööd
     global tervitus_label, nupp 
     tervitus_label.grid_forget() 
     nupp.grid_forget() 
     esita_küsimus()
+
 
 def esita_küsimus(): # Funktsioon, mis paneb küsimused koos piltidega ja vastuse valikutega ekraanile
     global söögikoht_indeks, kasutaja_indeks
@@ -88,6 +92,7 @@ def esita_küsimus(): # Funktsioon, mis paneb küsimused koos piltidega ja vastu
         else:
             ühised_söögikohad()
 
+
 def salvesta_vastus(vastus): # Salvestab vastused, et jah on 1 ja ei 0
     global söögikoht_indeks
     if vastus == "jah":
@@ -96,6 +101,7 @@ def salvesta_vastus(vastus): # Salvestab vastused, et jah on 1 ja ei 0
         kasutaja_vastused[kasutaja_indeks].append(0)
     söögikoht_indeks += 1
     esita_küsimus()
+
 
 def alusta2_start():  # Teisele kasutajale lisame eraldi nupu ja teksti
     global nupp2, kasutaja2_label
@@ -118,11 +124,13 @@ def alusta2_start():  # Teisele kasutajale lisame eraldi nupu ja teksti
     window.unbind("<Right>")
     window.unbind("<Left>")
 
+
 def kasutaja2_alustab(): # Alustab programmi uuesti 2 kasutaja jaoks
     # Eemaldame "Alustame" nupu ja teise kasutaja teksti
     kasutaja2_label.grid_forget()
     nupp2.grid_forget()
     esita_küsimus()  # Alustab küsimustega teise kasutaja jaoks
+
 
 def ühised_söögikohad(): # Vaatab millised söögikohad olid ühised ja kuvab need ekraanile
     window.unbind("<Right>")
@@ -171,7 +179,8 @@ def ühised_söögikohad(): # Vaatab millised söögikohad olid ühised ja kuvab
         tb.Label(scrollable_frame, text="Ei leidunud söögikohti, mis meeldiksid mõlemale!", font=("Arial", 20), bootstyle="red").pack(pady=20)
         tb.Button(scrollable_frame, text="EXIT", bootstyle="danger", command=window.destroy).pack(pady=35)
         canvas.unbind("<MouseWheel>")
-        
+      
+      
 def pilt_edasi(pildi_nr): # Muudab pilti, mida näidatakse ja confib nuppe, et nad annaksid uusi väärtuseid funktsiooni
     
     if pildi_nr > len(img_list): # Kontrollib kas listis on veel pilte
@@ -183,6 +192,7 @@ def pilt_edasi(pildi_nr): # Muudab pilti, mida näidatakse ja confib nuppe, et n
     
     window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Sama asi, aga noole nuppudele
     window.bind("<Left>", lambda x:[salvesta_vastus("ei"), pilt_edasi(pildi_nr + 1)])
+    
     
 def main():
     global söögikohad, kasutaja_vastused, kasutaja_indeks, söögikoht_indeks, content_frame
@@ -294,6 +304,7 @@ def main():
     juhend_nupp.grid(row=3, column=1, columnspan=1, pady=15)
     
     window.mainloop()
+
 
 if __name__ == "__main__":
     main()
