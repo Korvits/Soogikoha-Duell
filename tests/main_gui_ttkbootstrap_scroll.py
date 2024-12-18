@@ -2,14 +2,14 @@ import tkinter as tk
 import ttkbootstrap as tb
 from PIL import Image, ImageTk
 
-def söögikohad_failist(failinimi): #alg koodist lihtsalt
+def söögikohad_failist(failinimi): # Loeb soogikohtade nimetused failist
     söögikohad = []
     with open(failinimi, 'r', encoding="UTF-8") as fail:
         for rida in fail:
             söögikohad.append(rida.strip())
     return söögikohad
 
-def söögid_failist(failinimi):
+def söögid_failist(failinimi): # Loeb söögikohtade söökide valikud failist 
     söögid = {}
     with open(failinimi, 'r', encoding="UTF-8") as fail2:
         for rida in fail2:
@@ -19,7 +19,7 @@ def söögid_failist(failinimi):
             söögid[söögikoht] = ühe_koha_söögid
     return söögid
 
-def kuidas_kasutada():
+def kuidas_kasutada(): # Loob õpetuse hüpikakna programmile
     lisa_aken = tk.Toplevel(window)
     lisa_aken.title("Kuidas kasutada?")
     lisa_aken.geometry("") #sobitab ise akna suuruse, et kogu ekraanil olev mahuks peale
@@ -40,13 +40,13 @@ def kuidas_kasutada():
     juhend_kinni = tb.Button(lisa_aken, text="Sulge juhend", command=lisa_aken.destroy, bootstyle="primary")
     juhend_kinni.pack(pady=10)
 
-def alusta():
-    global tervitus_label, nupp #see global phm selleks et ma saaks muuta siin funktsioonis mingit eelnevat funktsiooni v muutujat vms
-    tervitus_label.grid_forget()  # Eemaldame tervituslabeli
-    nupp.grid_forget()  # Eemaldame alustamise nupu
+def alusta(): # Alustab programmi tööd
+    global tervitus_label, nupp 
+    tervitus_label.grid_forget() 
+    nupp.grid_forget() 
     esita_küsimus()
 
-def esita_küsimus():
+def esita_küsimus(): # Funktsioon, mis paneb küsimused koos piltidega ja vastuse valikutega ekraanile
     global söögikoht_indeks, kasutaja_indeks
     if söögikoht_indeks < len(söögikohad):
         küsimus_label.config(text=f"'{söögikohad[söögikoht_indeks]}'")
@@ -69,7 +69,7 @@ def esita_küsimus():
         else:
             ühised_söögikohad()
 
-def salvesta_vastus(vastus): #salvestab vastused, et jah on 1 ja ei 0 yk
+def salvesta_vastus(vastus): # Salvestab vastused, et jah on 1 ja ei 0
     global söögikoht_indeks
     if vastus == "jah":
         kasutaja_vastused[kasutaja_indeks].append(1)
@@ -99,14 +99,13 @@ def alusta2_start():  # Teisele kasutajale lisame eraldi nupu ja teksti
     window.unbind("<Right>")
     window.unbind("<Left>")
 
-def kasutaja2_alustab(): # 
+def kasutaja2_alustab(): # Alustab programmi uuesti 2 kasutaja jaoks
     # Eemaldame "Alustame" nupu ja teise kasutaja teksti
     kasutaja2_label.grid_forget()
     nupp2.grid_forget()
     esita_küsimus()  # Alustab küsimustega teise kasutaja jaoks
 
-
-def ühised_söögikohad(): 
+def ühised_söögikohad(): # Vaatab millised söögikohad olid ühised ja kuvab need ekraanile
     window.unbind("<Right>")
     window.unbind("<Left>")
     
@@ -119,43 +118,48 @@ def ühised_söögikohad():
     
     # Loob canvase, kus saab kasutada scrollwheeli ja muid asju veel
     canvas = tk.Canvas(new_frame)
+    # Ilmutab molemad ekraanile
+    canvas.pack(side="left", fill="both", expand=True)
     
     #Loob scrollbari
     scrollbar = tb.Scrollbar(new_frame, orient="vertical", command=canvas.yview)
-    scrollable_frame = tb.Frame(canvas)
+    #Määrab scrollbari canvasele ja määrab scorllimise suuna vertikaalseks
     
+    canvas.configure(yscrollcommand=scrollbar.set)
     # Teeb nii, et terve programmi raames saaks scrollida
-    scrollable_frame.bind(
+    canvas.bind(
         "<Configure>",
         lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
     )
+    
+    scrollable_frame = tb.Frame(canvas)
+    
     #Loob akna kuhu saame oma pildid ja teksti panna
-    canvas.create_window((275, 0), window=scrollable_frame, anchor="nw")
-    #Määrab scrollbari canvasele ja määrab scorllimise suuna vertikaalseks
-    canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.create_window((600, 0), window=scrollable_frame, anchor="n")
     
     #Laseb scrollida hiire mousewheeliga
     canvas.bind("<MouseWheel>", lambda event: canvas.yview_scroll(-int(event.delta / 60), "units"))
-    
-    # Ilmutab molemad ekraanile
-    canvas.pack(side="left", fill="both", expand=True)
-    scrollbar.pack(side="right", fill="y")
     
     # Lisame ühised söögikohad ekraanile
     if ühised:
         tb.Label(scrollable_frame, text="Söögikohad, mis meeldisid mõlemale", font=("Arial", 20, "bold")).pack(pady=20)
         for koht in ühised:
             tb.Label(scrollable_frame, text=koht, font=("Arial", 14)).pack(pady=75)
-            tb.Label(scrollable_frame, image=img_list[söögikohad.index(koht)+1]).pack(pady=10) 
+            tb.Label(scrollable_frame, image=img_list[söögikohad.index(koht)+1]).pack(pady=25)
+        scrollbar.pack(side="right", fill="y")
+        tb.Button(scrollable_frame, text="EXIT", bootstyle="danger", command=window.destroy).pack(pady=35)
     else:
-        tb.Label(scrollable_frame, text="Ei leidunud söögikohti, mis meeldiksid mõlemale!", font=("Arial", 16), bootstyle="red").pack(pady=20)
+        tb.Label(scrollable_frame, text="Ei leidunud söögikohti, mis meeldiksid mõlemale!", font=("Arial", 20), bootstyle="red").pack(pady=20)
+        tb.Button(scrollable_frame, text="EXIT", bootstyle="danger", command=window.destroy).pack(pady=35)
+        canvas.unbind("<MouseWheel>")
         
-def pilt_edasi(pildi_nr):
+def pilt_edasi(pildi_nr): # Muudab pilti, mida näidatakse ja confib nuppe, et nad annaksid uusi väärtuseid funktsiooni
+    
     if pildi_nr > len(img_list): # Kontrollib kas listis on veel pilte
         return
-    img_label.config(image=img_list[pildi_nr - 1])
+    img_label.config(image=img_list[pildi_nr - 1]) # Muudab pildi ära
     
-    jah_nupp.config(command=lambda: [salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Muudab nuppude funktsioone peale igat vajutust
+    jah_nupp.config(command=lambda: [salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Muudab nuppude funktsioone peale igat vajutust, et saaks järgmist pilti listist
     ei_nupp.config(command=lambda: [salvesta_vastus("ei"), pilt_edasi(pildi_nr + 1)])
     
     window.bind("<Right>", lambda x:[salvesta_vastus("jah"), pilt_edasi(pildi_nr + 1)]) #Sama asi, aga noole nuppudele
@@ -190,7 +194,7 @@ def main():
     y = (screen_height / 2) - (1000 / 2)
     
     # Määrab programmi akna suuruse ja paigutuse ekraanil
-    window.geometry(f"1200x1000+{int(x)}+{int(y)}")
+    window.geometry(f"1200x1000+{int(x)}+{int(y)-45}")
     
     # Loob raami 
     content_frame = tb.Frame(window)
