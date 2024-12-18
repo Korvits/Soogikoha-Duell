@@ -1,0 +1,10 @@
+Vapiano - Itaalia köök;Pasta;Pizza
+El Chapo - Mehhikopärane tänavatoit;Tacod;Churrod;Nachod
+Kebaba - Türgi köök;Kebab
+Kampus - Peakoka nurk, Uulitsa Tänavagurmee, Kauss Poke;Hawaii juurtega poke kausid;tänavagurmee burgerid
+La Dolce vita - Itaalia köök;Bruschettad;Salat;Supp;liha- ja kalaroad;Pasta;Risotto
+Krempel - Kohvik;Magusad ja soolased pannkoogid
+McDonalds - Kiirtoidurestoran;Burgerid;Friikartulid;Jäätis
+Burger King - Kiirtoidurestoran;Burgerid;Friikartulid
+Kolm Tilli - Tänavatoidurestoran;Pitsad;Ramen;Churrod;Salatid
+Pazzo - Itaalia köök;Pitsa;Pasta;Risoto;Liharoad
